@@ -4,7 +4,9 @@
  * Copyright Devin. All rights reserved.
  *
  */
-import { AsyncStorage } from "react-native";
+// import { AsyncStorage } from "react-native";
+// 新版react-native
+import AsyncStorage from '@react-native-community/async-storage';
 import { ThemeFlags } from "../../resource/styles/ThemeFactory";
 import ThemeFactory from "../../resource/styles/ThemeFactory";
 
