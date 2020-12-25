@@ -10,6 +10,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import Root from "../pages/root/Root";
 import WelcomePage from "../pages/welcome/WelcomePage";
+import AboutMePage from '../pages/about/AboutMePage';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,8 @@ export default function App() {
                               options={{headerShown: false}}/>
                 <Stack.Screen name="Root" component={Root}
                               options={{headerShown: false, animationEnabled: false}}/>
+                <Stack.Screen name={"AboutMePage"} component={AboutMePage}
+                              options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -5,7 +5,6 @@
  *
  */
 
-
 import React, { PureComponent } from "react";
 import { ViewPropTypes, Text, StatusBar, StyleSheet, View, Platform, DeviceInfo } from "react-native";
 import { PropTypes } from "prop-types";

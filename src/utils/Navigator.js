@@ -10,6 +10,22 @@
 import {StackActions} from '@react-navigation/native';
 
 export default class Navigator {
+
+    static goPage(params, page) {
+        const navigation = Navigator.navigation;
+        if (!navigation) return;
+        navigation.navigate(
+            page,
+            {
+                ...params,
+            }
+        )
+    }
+
+    static goBack(navigation) {
+        navigation.goBack();
+    }
+
     static restRoot(params) {
         const {navigation} = params;
         navigation.dispatch(

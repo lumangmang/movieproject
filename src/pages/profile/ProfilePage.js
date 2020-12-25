@@ -19,6 +19,7 @@ import actions from '../../action';
 import {connect} from 'react-redux';
 import {Menu} from "../../common/Menu";
 import ViewExtension from "../../utils/ViewExtension";
+import Navigator from "../../utils/Navigator";
 
 class ProfilePage extends PureComponent {
 
@@ -30,8 +31,14 @@ class ProfilePage extends PureComponent {
                 const {onShowCustomThemeView} = this.props;
                 onShowCustomThemeView(true);
                 break;
+            case Menu.About_Author:
+                RouteName = 'AboutMePage';
+                break;
             default:
                 break;
+        }
+        if (RouteName) {
+            Navigator.goPage(params, RouteName);
         }
     }
 
@@ -55,8 +62,10 @@ class ProfilePage extends PureComponent {
         return (
             <View style={GlobalStyle.root_container}>
                 {navigationBar}
-                <ScrollView >
+                <ScrollView>
                     {this.getItem(Menu.Custom_Theme)}
+                    <View style={GlobalStyle.line}/>
+                    {this.getItem(Menu.About_Author)}
                 </ScrollView>
             </View>
         );
