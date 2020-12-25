@@ -6,7 +6,7 @@
  */
 
 import Types from "../../action/types";
-import ThemeFactory, { ThemeFlags } from "../../resource/styles/ThemeFactory";
+import ThemeFactory, {ThemeFlags} from "../../resource/styles/ThemeFactory";
 
 const defaultState = {
     theme: ThemeFactory.createTheme(ThemeFlags.Default),
@@ -28,5 +28,4 @@ export default function onAction(state = defaultState, action) {
         default:
             return state;
     }
-
 }

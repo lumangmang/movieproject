@@ -10,22 +10,27 @@ import SafeAreaViewPlus from "../../common/SafeAreaViewPlus";
 import TabBarNavigators from "../../navigator/TabBarNavigators";
 import { connect } from "react-redux";
 import actions from '../../action';
+import Navigator from "../../utils/Navigator";
+import ThemeView from "../../common/ThemeView";
 
 class Root extends PureComponent {
 
-    // renderCustomThemeView() {
-    //     const {customThemeViewVisible, onShowCustomThemeView} = this.props;
-    //     return (<CustomTheme
-    //         visible={customThemeViewVisible}
-    //         {...this.props}
-    //         onClose={() => onShowCustomThemeView(false)}
-    //     />);
-    // }
+    renderCustomThemeView() {
+        const {customThemeViewVisible, onShowCustomThemeView} = this.props;
+        return (<ThemeView
+            visible={customThemeViewVisible}
+            {...this.props}
+            onClose={() => onShowCustomThemeView(false)}
+        />);
+    }
 
     render() {
+        const {theme} = this.props;
+        Navigator.navigation = this.props.navigation;
         return (
-            <SafeAreaViewPlus topColor={"blue"}>
+            <SafeAreaViewPlus topColor={theme.themeColor}>
                 <TabBarNavigators />
+                {this.renderCustomThemeView()}
             </SafeAreaViewPlus>
         );
     }

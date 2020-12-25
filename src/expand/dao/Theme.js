@@ -7,7 +7,7 @@
 // import { AsyncStorage } from "react-native";
 // 新版react-native
 import AsyncStorage from '@react-native-community/async-storage';
-import { ThemeFlags } from "../../resource/styles/ThemeFactory";
+import {ThemeFlags} from "../../resource/styles/ThemeFactory";
 import ThemeFactory from "../../resource/styles/ThemeFactory";
 
 const THEME_KEY = "theme_key";
@@ -31,7 +31,7 @@ export default class Theme {
 
     save(flag) {
         AsyncStorage.setItem(THEME_KEY, flag, error => {
-            console.log("save theme error", error);
+            if (error) console.log("save theme error", error);
         });
     }
 }
