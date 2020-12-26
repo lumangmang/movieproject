@@ -5,14 +5,14 @@
  *
  */
 
-import React, {PureComponent} from "react";
-import {NavigationContainer} from "@react-navigation/native";
-import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import React, { PureComponent } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { BottomTabBar, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Feather from 'react-native-vector-icons/Feather';
+import Feather from "react-native-vector-icons/Feather";
 import HomePage from "../pages/home/HomePage";
 import ProfilePage from "../pages/profile/ProfilePage";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,11 +21,11 @@ const TABS = {
         screen: HomePage,
         navigationOptions: {
             tabBarLabel: "首页",
-            tabBarIcon: ({color, focused}) => {
+            tabBarIcon: ({ color, focused }) => {
                 return <MaterialIcons
                     name={"whatshot"}
                     size={26}
-                    style={{color: color}}
+                    style={{ color: color }}
                 />;
             },
         },
@@ -35,11 +35,11 @@ const TABS = {
         screen: ProfilePage,
         navigationOptions: {
             tabBarLabel: "我的",
-            tabBarIcon: ({color, focused}) => {
+            tabBarIcon: ({ color, focused }) => {
                 return <Feather
                     name={"user"}
                     size={26}
-                    style={{color: color}}
+                    style={{ color: color }}
                 />;
             },
         },
@@ -51,8 +51,8 @@ class TabBarNavigators extends PureComponent {
         // if (this.Tabs) {
         //     return this.Tabs;
         // }
-        const {HomePage, ProfilePage} = TABS;
-        const tabs = {HomePage, ProfilePage};
+        const { HomePage, ProfilePage } = TABS;
+        const tabs = { HomePage, ProfilePage };
         return this.Tabs = <NavigationContainer
             independent={true}
         >

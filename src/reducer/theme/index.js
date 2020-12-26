@@ -13,7 +13,7 @@ const defaultState = {
     onShowCustomThemeView: false,
 };
 
-export default function onAction(state = defaultState, action) {
+export default (state = defaultState, action) => {
     switch (action.type) {
         case Types.THEME_CHANGE:
             return {

@@ -11,6 +11,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 export const Menu = {
-    Custom_Theme: {name: '自定义主题', Icons: Ionicons, icon: 'ios-color-palette'},
+    Custom_Theme: {name: '主题选择', Icons: Ionicons, icon: 'ios-color-palette'},
     About_Author: {name: '关于作者', Icons: Octicons, icon: 'smiley'},
 }

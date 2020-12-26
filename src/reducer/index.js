@@ -7,9 +7,11 @@
 
 import { combineReducers } from "redux";
 import theme from "./theme";
+import users from './users';
 
 const index = combineReducers({
     theme: theme,
+    users: users,
 });
 
 export default index;
