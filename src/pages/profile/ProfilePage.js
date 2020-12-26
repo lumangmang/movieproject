@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 import { Menu } from "../../common/Menu";
 import ViewExtension from "../../utils/ViewExtension";
 import Navigator from "../../utils/Navigator";
-import constants from "../../macro/Macro";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 class ProfilePage extends PureComponent {
     onSelectItem(item) {
@@ -34,6 +34,9 @@ class ProfilePage extends PureComponent {
             case Menu.About_Author:
                 RouteName = "AboutMePage";
                 break;
+            case Menu.About:
+                RouteName = "AboutPage";
+                break;
             default:
                 break;
         }
@@ -46,6 +49,7 @@ class ProfilePage extends PureComponent {
         const { theme } = this.props;
         return ViewExtension.getItem(() => this.onSelectItem(item), item, theme.themeColor);
     }
+
     render() {
         const { theme } = this.props;
         let statusBar = {
@@ -61,9 +65,40 @@ class ProfilePage extends PureComponent {
         return (
             <View style={GlobalStyle.root_container}>
                 {navigationBar}
-                {this.getItem(Menu.Custom_Theme)}
-                <View style={GlobalStyle.line}/>
-                {this.getItem(Menu.About_Author)}
+                <ScrollView>
+                    <TouchableOpacity style={styles.item}
+                                      onPress={() => this.onSelectItem(Menu.About)}
+                    >
+                        <View style={styles.about_left}>
+                            <Ionicons
+                                name={Menu.About.icon}
+                                size={40}
+                                style={{
+                                    marginRight: 10,
+                                    color: theme.themeColor,
+                                }}
+                            />
+                            <Text>GitHub Popular</Text>
+                        </View>
+                        <Ionicons
+                            name={"ios-arrow-forward"}
+                            size={16}
+                            style={{
+                                marginRight: 10,
+                                alignSelf: "center",
+                                color: theme.themeColor,
+                            }} />
+                    </TouchableOpacity>
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.Tutorial)}
+                    <View style={GlobalStyle.line} />
+                    <Text style={styles.groupTitle}>趋势管理</Text>
+                    {this.getItem(Menu.Custom_Language)}
+                    <View style={GlobalStyle.line}/>
+                    {this.getItem(Menu.Custom_Theme)}
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.About_Author)}
+                </ScrollView>
             </View>
         );
     }
@@ -82,63 +117,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "black",
+        marginTop: 30,
     },
-    background: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: window.width,
-        height: constants.parallax_header_height,
-    },
-    stickySection: {
-        height: constants.sticky_header_height,
+    about_left: {
         alignItems: "center",
-        paddingTop: constants.statusBar_height,
-    },
-    stickySectionText: {
-        color: "white",
-        fontSize: 20,
-        margin: 10,
-    },
-    fixedSection: {
-        position: "absolute",
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        paddingRight: 8,
         flexDirection: "row",
+    },
+    item: {
+        backgroundColor: "white",
+        padding: 10,
+        height: 90,
         alignItems: "center",
         justifyContent: "space-between",
-        paddingTop: constants.statusBar_height,
+        flexDirection: "row",
     },
-    fixedSectionText: {
-        color: "#999",
-        fontSize: 20,
-    },
-    parallaxHeader: {
-        alignItems: "center",
-        flex: 1,
-        flexDirection: "column",
-        paddingTop: 100,
-    },
-    avatar: {
-        marginBottom: 10,
-        borderRadius: constants.avatar / 2,
-        width: constants.avatar,
-        height: constants.avatar,
-    },
-    sectionSpeakerText: {
-        color: "white",
-        fontSize: 24,
-        paddingVertical: 5,
-        marginBottom: 10,
-    },
-    sectionTitleText: {
-        color: "white",
-        fontSize: 16,
-        marginRight: 10,
+    groupTitle: {
         marginLeft: 10,
+        marginTop: 10,
+        marginBottom: 5,
+        fontSize: 12,
+        color: "gray",
     },
 });

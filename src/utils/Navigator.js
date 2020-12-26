@@ -7,19 +7,23 @@
  *
  */
 
-import {StackActions} from '@react-navigation/native';
+import { StackActions } from "@react-navigation/native";
 
 export default class Navigator {
 
     static goPage(params, page) {
         const navigation = Navigator.navigation;
-        if (!navigation) return;
+        if (!navigation) {
+            console.log("navigation empty");
+            return;
+        }
+
         navigation.navigate(
             page,
             {
                 ...params,
-            }
-        )
+            },
+        );
     }
 
     static goBack(navigation) {
@@ -27,9 +31,16 @@ export default class Navigator {
     }
 
     static restRoot(params) {
-        const {navigation} = params;
+        const { navigation } = params;
         navigation.dispatch(
-            StackActions.replace('Root', {}),
-        )
+            StackActions.replace("Root", {}),
+        );
+    }
+
+    static restPage(params, page) {
+        const { navigation } = params;
+        navigation.dispatch(
+            StackActions.replace(page, {}),
+        );
     }
 }

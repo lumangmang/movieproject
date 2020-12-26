@@ -9,6 +9,7 @@
 import Root from "../../pages/root/Root";
 import WelcomePage from "../../pages/welcome/WelcomePage";
 import AboutMePage from "../../pages/about/AboutMePage";
+import AboutPage from "../../pages/about/AboutPage";
 
 // 全局子页面路由
 export default [
@@ -25,6 +26,11 @@ export default [
     {
         name: "AboutMePage",
         component: AboutMePage,
+        options: { headerShown: false },
+    },
+    {
+        name: "AboutPage",
+        component: AboutPage,
         options: { headerShown: false },
     },
 ];

@@ -7,21 +7,18 @@
  *
  */
 
-import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
-import actions from '../../action'
-import SplashScreen from 'react-native-splash-screen';
-import Navigator from "../../utils/Navigator";
-import {View, Text} from 'react-native';
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import actions from "../../action";
+import SplashScreen from "react-native-splash-screen";
+import GuidePage from "./GuidePage";
 
 class WelcomePage extends PureComponent {
+
     componentDidMount() {
         this.props.onThemeInit();
         this.timer = setTimeout(() => {
             SplashScreen.hide();
-            Navigator.restRoot({
-                navigation: this.props.navigation,
-            });
         }, 300);
     }
 
@@ -30,13 +27,13 @@ class WelcomePage extends PureComponent {
     }
 
     render() {
-        return null;
+        return <GuidePage {...this.props}/>;
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     onThemeInit: () => dispatch(actions.onThemeInit()),
-})
+});
 
 export default connect(null, mapDispatchToProps)(WelcomePage);
 
