@@ -20,7 +20,7 @@ const TABS = {
     HomePage: {
         screen: HomePage,
         navigationOptions: {
-            tabBarLabel: "首页",
+            tabBarLabel: "最热",
             tabBarIcon: ({ color, focused }) => {
                 return <MaterialIcons
                     name={"whatshot"}

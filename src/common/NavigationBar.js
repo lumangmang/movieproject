@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: "white",
+        fontWeight: 'bold'
     },
     statusBar: {
         height: STATUS_BAR_HEIGHT,

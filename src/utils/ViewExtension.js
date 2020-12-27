@@ -23,8 +23,12 @@ export default class ViewExtension {
         </TouchableOpacity>;
     }
 
-    static rightBarButtonItem(title, callBack) {
-
+    static rightBarButtonItem(title, Icon, callBack) {
+        return <TouchableOpacity style={{ padding: 8 }}
+                                 onPress={callBack}
+        >
+            {Icon}
+        </TouchableOpacity>;
     }
 
     static shareButton(callBack) {
@@ -62,7 +66,6 @@ export default class ViewExtension {
                     name={expandableIco ? expandableIco : "ios-arrow-forward"}
                     size={20}
                     style={{
-                        marginRight: 10,
                         alignSelf: "center",
                         color: color || "black",
                     }}

@@ -37,6 +37,14 @@ class ProfilePage extends PureComponent {
             case Menu.About:
                 RouteName = "AboutPage";
                 break;
+            case Menu.Feedback:
+                RouteName = "FeedBackPage";
+                params.title = Menu.Feedback.name;
+                break;
+            case Menu.Tutorial:
+                RouteName = "WebViewPage";
+                params.title = "指导";
+                params.url = "https://www.baidu.com";
             default:
                 break;
         }
@@ -54,7 +62,7 @@ class ProfilePage extends PureComponent {
         const { theme } = this.props;
         let statusBar = {
             backgroundColor: theme.themeColor,
-            barStyle: "default",
+            barStyle: "light-content",
         };
         let navigationBar =
             <NavigationBar
@@ -84,7 +92,6 @@ class ProfilePage extends PureComponent {
                             name={"ios-arrow-forward"}
                             size={16}
                             style={{
-                                marginRight: 10,
                                 alignSelf: "center",
                                 color: theme.themeColor,
                             }} />
@@ -94,10 +101,23 @@ class ProfilePage extends PureComponent {
                     <View style={GlobalStyle.line} />
                     <Text style={styles.groupTitle}>趋势管理</Text>
                     {this.getItem(Menu.Custom_Language)}
-                    <View style={GlobalStyle.line}/>
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.Sort_Language)}
+                    <Text style={styles.groupTitle}>最热管理</Text>
+                    {this.getItem(Menu.Custom_Key)}
+                    {/*标签排序*/}
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.Sort_Key)}
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.Remove_Key)}
+                    <Text style={styles.groupTitle}>设置</Text>
                     {this.getItem(Menu.Custom_Theme)}
                     <View style={GlobalStyle.line} />
                     {this.getItem(Menu.About_Author)}
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.Feedback)}
+                    <View style={GlobalStyle.line} />
+                    {this.getItem(Menu.CodePush)}
                 </ScrollView>
             </View>
         );

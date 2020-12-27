@@ -9,6 +9,7 @@
 
 import Types from "../types";
 import Server from "../../expand/dao/HttpServerDao";
+import { Octokit } from "@octokit/rest";
 
 export function fetchUserInfo() {
     return dispatch => {
@@ -19,6 +20,24 @@ export function fetchUserInfo() {
             });
         }).catch(error => {
             console.log("fetchUserInfo", error);
+        });
+    };
+}
+
+export function submitFeedBack() {
+    return dispatch => {
+        new Octokit({
+        }).request("get /repos/{owner}/{repo}/issues", {
+            owner: "lumangmang",
+            repo: "movieproject",
+            title: "测试",
+        }).then(response => {
+            dispatch({
+                type: Types.SUBMIT_FEED_BACK,
+                feedback: response,
+            });
+        }).catch(error => {
+            console.log("error", error.status);
         });
     };
 }

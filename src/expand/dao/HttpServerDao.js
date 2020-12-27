@@ -25,6 +25,16 @@ class HttpServerDao {
             });
         });
     }
+
+    post(url, params = {}) {
+        return new Promise((resolve, reject) => {
+            service.post(url).then((response) => {
+                resolve(response);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    }
 }
 
 export default new HttpServerDao();

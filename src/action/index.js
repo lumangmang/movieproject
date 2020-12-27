@@ -7,11 +7,12 @@
 
 import { onThemeChange, onThemeInit, onShowCustomThemeView } from "./theme";
 
-import { fetchUserInfo } from "./users";
+import { fetchUserInfo, submitFeedBack } from "./users";
 
 export default {
     onThemeInit,
     onThemeChange,
     onShowCustomThemeView,
     fetchUserInfo,
+    submitFeedBack,
 };
