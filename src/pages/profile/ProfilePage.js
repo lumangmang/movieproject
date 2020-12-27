@@ -54,7 +54,7 @@ class ProfilePage extends PureComponent {
         const { theme } = this.props;
         let statusBar = {
             backgroundColor: theme.themeColor,
-            barStyle: "light-content",
+            barStyle: "default",
         };
         let navigationBar =
             <NavigationBar

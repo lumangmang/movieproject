@@ -14,6 +14,7 @@ import ParallaxScrollView from "react-native-parallax-scroll-view";
 import GlobalStyle from "../../resource/styles/GlobalStyle";
 import ViewExtension from "../../utils/ViewExtension";
 import constants from "../../macro/Macro";
+import image from "../../utils/ImageHelper";
 import {
     StyleSheet,
     View, Image, Text,
@@ -42,14 +43,15 @@ export default class AboutBase {
 
     getParallaxRenderConfig(params, isLoading) {
         let config = {};
-        let avatar = typeof (params.avatar_url) === "string" ? { uri: params.avatar_url } : params.avatar_url;
         config.renderBackground = () => (
             <View key={"background"}>
-                <Image source={{
-                    uri: params.avatar_url,
+                <Image style={{
                     width: constants.window.width,
                     height: constants.parallax_header_height,
-                }} />
+                }}
+                       source={{
+                           uri: params.avatar_url,
+                       }} />
                 <View style={{
                     position: "absolute",
                     width: constants.window.width,
@@ -60,7 +62,9 @@ export default class AboutBase {
         config.renderForeground = () => (
             <View key="parallax-header" style={styles.parallaxHeader}>
                 <Image style={styles.avatar}
-                       source={avatar} />
+                       source={{ uri: params.avatar_url }}
+                       defaultSource={image.avatar_default}
+                />
                 <Text style={styles.sectionSpeakerText}>
                     {params.login}
                 </Text>
@@ -77,8 +81,8 @@ export default class AboutBase {
         config.renderFixedHeader = () => (
             <View key="fixed-header" style={styles.fixedSection}>
                 {ViewExtension.leftBarButtonItem(() => Navigator.goBack(this.props.navigation))}
-                <View style={{ flexDirection: "row", alignItems: "center"}}>
-                    <ActivityIndicator style={{size: 20, marginRight: 8}}
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <ActivityIndicator style={{ size: 20, marginRight: 8 }}
                                        animating={isLoading}
                     />
                     {ViewExtension.shareButton(() => {

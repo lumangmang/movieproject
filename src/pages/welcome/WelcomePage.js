@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import actions from "../../action";
 import SplashScreen from "react-native-splash-screen";
 import GuidePage from "./GuidePage";
+import AdvertPage from "./AdvertPage";
+import Navigator from "../../utils/Navigator";
 
 class WelcomePage extends PureComponent {
 
@@ -27,7 +29,13 @@ class WelcomePage extends PureComponent {
     }
 
     render() {
-        return <GuidePage {...this.props}/>;
+        return <AdvertPage
+            onButtonClick={() => {
+                Navigator.restRoot({
+                    navigation: this.props.navigation,
+                });
+            }}
+            {...this.props} />;
     }
 }
 
