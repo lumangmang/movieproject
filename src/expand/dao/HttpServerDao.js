@@ -18,7 +18,9 @@ class HttpServerDao {
      */
     get(url, params = {}) {
         return new Promise((resolve, reject) => {
-            service.get(url).then((response) => {
+            service.get(url, {
+                params: params,
+            }).then((response) => {
                 resolve(response);
             }).catch(error => {
                 reject(error);
@@ -28,7 +30,7 @@ class HttpServerDao {
 
     post(url, params = {}) {
         return new Promise((resolve, reject) => {
-            service.post(url).then((response) => {
+            service.post(url, params).then((response) => {
                 resolve(response);
             }).catch(error => {
                 reject(error);

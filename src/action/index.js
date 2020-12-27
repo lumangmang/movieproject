@@ -8,6 +8,7 @@
 import { onThemeChange, onThemeInit, onShowCustomThemeView } from "./theme";
 
 import { fetchUserInfo, submitFeedBack } from "./users";
+import { onRefreshPopular } from "./popular";
 
 export default {
     onThemeInit,
@@ -15,4 +16,5 @@ export default {
     onShowCustomThemeView,
     fetchUserInfo,
     submitFeedBack,
+    onRefreshPopular,
 };

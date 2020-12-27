@@ -8,20 +8,18 @@
 import React, { PureComponent } from "react";
 import {
     View,
-    Text,
     StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
 import NavigationBar from "../../common/NavigationBar";
-import Navigator from "../../utils/Navigator";
 import GlobalStyle from "../../resource/styles/GlobalStyle";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import HomeListPage from "./HomeListPage";
 
 const Tab = createMaterialTopTabNavigator();
 
 class HomePage extends PureComponent {
-
     constructor(props) {
         super(props);
         this.tabNames = ["iOS", "Java", "Python"];
@@ -31,7 +29,7 @@ class HomePage extends PureComponent {
         const tabs = {};
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                screen: props => <View {...props} tabLabel={item}></View>,
+                screen: props => <HomeListPage {...props} tabLabel={item} />,
                 navigationOptions: {
                     title: item,
                 },
@@ -60,7 +58,6 @@ class HomePage extends PureComponent {
                 lazy={true}
                 tabBarOptions={
                     {
-                        tabStyle: styles.tabStyle,
                         scrollEnabled: true,
                         activeTintColor: "white",
                         style: {
@@ -72,8 +69,6 @@ class HomePage extends PureComponent {
                 }
             >
                 {Object.entries(this.pageViews()).map(item => {
-                    console.log(this.pageViews());
-                    console.log(item);
                     return <Tab.Screen key={item[0]} name={item[0]}
                                        component={item[1].screen}
                                        options={item[1].navigationOptions}
@@ -98,26 +93,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, null)(HomePage);
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    tabStyle: {
-        // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁
-        padding: 0,
-    },
     indicatorStyle: {
         height: 2,
         backgroundColor: "white",
     },
     labelStyle: {
         fontSize: 13,
-        margin: 0,
-    },
-    indicatorContainer: {
-        alignItems: "center",
-    },
-    indicator: {
-        color: "red",
-        margin: 10,
     },
 });
