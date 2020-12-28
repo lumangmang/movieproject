@@ -14,34 +14,34 @@ import URLs from "../../macro/URLs";
 export function onRefreshPopular(storeName) {
     return dispatch => {
         dispatch({
-            type: Types.REFRESH_INDEX,
+            type: Types.REFRESH_INDEX, storeName: storeName,
         });
         service.get(URLs.search_repositories_url, {
             q: storeName,
             sort: "stars",
             page: 1,
-            per_page: 1,
+            per_page: 2,
         }).then(response => {
-            handleResponse(dispatch, response, Types.REFRESH_INDEX_SUCCESS);
+            handleResponse(dispatch, response, Types.REFRESH_INDEX_SUCCESS, storeName);
         }).catch(error => {
             console.log(error);
             dispatch({
                 type: Types.REFRESH_INDEX_FAILED,
                 error,
+                storeName,
             });
         });
     };
 }
 
-function handleResponse(dispatch, data, actionType) {
+function handleResponse(dispatch, data, actionType, storeName) {
     let projectModels = [];
     if (data && data.items) {
         projectModels = data.items;
     }
-
-    console.log('projectModels', projectModels);
     dispatch({
         type: actionType,
         items: projectModels,
+        storeName,
     });
 }

@@ -5,41 +5,45 @@
  *
  */
 
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import {
     View,
-    StyleSheet,
 } from "react-native";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import NavigationBar from "../../common/NavigationBar";
 import GlobalStyle from "../../resource/styles/GlobalStyle";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from "@react-navigation/native";
 import HomeListPage from "./HomeListPage";
-
-const Tab = createMaterialTopTabNavigator();
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import HomePageNavigator from "./HomePageNavigator";
 
 class HomePage extends PureComponent {
     constructor(props) {
         super(props);
-        this.tabNames = ["iOS", "Java", "Python"];
+        this.storeNames = ["iOS", "Java", "Python", 'React',
+            "Android", "C++", "C#", 'JavaScript'
+        ];
     }
 
     pageViews() {
-        const tabs = {};
-        this.tabNames.forEach((item, index) => {
-            tabs[`tab${index}`] = {
-                screen: props => <HomeListPage {...props} tabLabel={item} />,
-                navigationOptions: {
-                    title: item,
-                },
-            };
-        });
-        return tabs;
+        const {theme} = this.props;
+        return <ScrollableTabView
+            renderTabBar={() =>
+                <HomePageNavigator
+                    tabs={this.storeNames}
+                    activeTextColor={'white'}
+                    inactiveTextColor={'white'}
+                    backgroundColor={theme.themeColor}
+                    underlineWidth={20}
+                    underlineStyle={{backgroundColor: 'white', height: 3}}
+                />}>
+            {this.storeNames.map((item) => (
+                <HomeListPage key={item} tabLabel={item} {...this.props}/>
+            ))}
+        </ScrollableTabView>
     }
 
     render() {
-        const { theme } = this.props;
+        const {theme} = this.props;
         let statusBar = {
             backgroundColor: theme.themeColor,
             barStyle: "light-content",
@@ -50,33 +54,7 @@ class HomePage extends PureComponent {
                 statusBar={statusBar}
                 style={theme.styles.navBar}
             />;
-
-        const TabNavigator = <NavigationContainer
-            independent={true}
-        >
-            <Tab.Navigator
-                lazy={true}
-                tabBarOptions={
-                    {
-                        scrollEnabled: true,
-                        activeTintColor: "white",
-                        style: {
-                            backgroundColor: theme.themeColor,
-                        },
-                        indicatorStyle: styles.indicatorStyle,
-                        labelStyle: styles.labelStyle,
-                    }
-                }
-            >
-                {Object.entries(this.pageViews()).map(item => {
-                    return <Tab.Screen key={item[0]} name={item[0]}
-                                       component={item[1].screen}
-                                       options={item[1].navigationOptions}
-                    />;
-                })}
-            </Tab.Navigator>
-        </NavigationContainer>;
-
+        const TabNavigator = this.pageViews();
         return (
             <View style={GlobalStyle.root_container}
             >
@@ -91,13 +69,3 @@ const mapStateToProps = state => ({
     theme: state.theme.theme,
 });
 export default connect(mapStateToProps, null)(HomePage);
-
-const styles = StyleSheet.create({
-    indicatorStyle: {
-        height: 2,
-        backgroundColor: "white",
-    },
-    labelStyle: {
-        fontSize: 13,
-    },
-});

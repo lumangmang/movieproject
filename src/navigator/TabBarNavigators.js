@@ -47,6 +47,10 @@ const TABS = {
 };
 
 class TabBarNavigators extends PureComponent {
+    constructor(props) {
+        super(props);
+        console.disableYellowBox = true;
+    }
     tabNavigator() {
         // if (this.Tabs) {
         //     return this.Tabs;

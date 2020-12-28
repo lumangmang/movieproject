@@ -9,30 +9,35 @@
 
 import Types from "../../action/types";
 
-const defaultState = {
-    projectModels: [],
-    isLoading: false,
-};
+const defaultState = {};
 
 export default (state = defaultState, action) => {
-
     switch (action.type) {
         case Types.REFRESH_INDEX:
             return {
                 ...state,
-                isLoading: true,
+                [action.storeName]: {
+                    ...state[action.storeName],
+                    isLoading: true,
+                }
             };
         case Types.REFRESH_INDEX_SUCCESS:
             return {
                 ...state,
-                isLoading: false,
-                projectModels: action.items,
+                [action.storeName]: {
+                    ...state[action.storeName],
+                    isLoading: false,
+                    projectModels: action.items,
+                }
             };
         case Types.REFRESH_INDEX_FAILED:
             return {
                 ...state,
-                isLoading: false,
-                error: action.error,
+                [action.storeName]: {
+                    ...state[action.storeName],
+                    isLoading: false,
+                    error: action.error,
+                },
             };
         default:
             return state;
