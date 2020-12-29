@@ -7,6 +7,7 @@
 
 import React, {PureComponent} from "react";
 import {
+    TouchableOpacity,
     View,
 } from "react-native";
 import {connect} from "react-redux";
@@ -15,6 +16,8 @@ import GlobalStyle from "../../resource/styles/GlobalStyle";
 import HomeListPage from "./HomeListPage";
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import HomePageNavigator from "./HomePageNavigator";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Navigator from "../../utils/Navigator";
 
 class HomePage extends PureComponent {
     constructor(props) {
@@ -42,6 +45,26 @@ class HomePage extends PureComponent {
         </ScrollableTabView>
     }
 
+    renderRightButton() {
+        const {theme} = this.props;
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    Navigator.goPage({theme},'SearchPage')
+                }}>
+                <View style={{padding: 5, marginRight: 8}}>
+                    <Ionicons
+                        name={'ios-search'}
+                        size={24}
+                        style={{
+                            marginRight: 8, alignSelf: 'center',
+                            color: 'white',
+                        }}/>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     render() {
         const {theme} = this.props;
         let statusBar = {
@@ -53,6 +76,7 @@ class HomePage extends PureComponent {
                 title={"热门"}
                 statusBar={statusBar}
                 style={theme.styles.navBar}
+                rightButton={this.renderRightButton()}
             />;
         const TabNavigator = this.pageViews();
         return (

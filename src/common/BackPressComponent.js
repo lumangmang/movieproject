@@ -6,6 +6,8 @@
  * All rights reserved.
  *
  */
+
+// 安卓物理返回
 import {BackHandler} from 'react-native';
 
 export default class BackPressComponent {

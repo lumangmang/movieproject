@@ -13,6 +13,7 @@ import AboutPage from "../../pages/about/AboutPage";
 import WebViewPage from "../../pages/webview/WebViewPage";
 import FeedBackPage from "../../pages/profile/FeedBackPage";
 import RepoDetailPage from "../../pages/home/RepoDetailPage";
+import SearchPage from "../../pages/SearchPage";
 
 // 全局子页面路由
 export default [
@@ -42,6 +43,10 @@ export default [
     },
     {
         name: "RepoDetailPage", component: RepoDetailPage,
+        options: { headerShown: false },
+    },
+    {
+        name: "SearchPage", component: SearchPage,
         options: { headerShown: false },
     },
 ];

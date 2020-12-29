@@ -26,9 +26,6 @@ export default class RepoDetailPage extends PureComponent {
     constructor(props) {
         super(props);
         this.params = props.route.params;
-
-        console.log(this.params);
-
         const {projectModel} = this.params;
         this.url = projectModel.html_url || TRENDING_URL + projectModel.fullName;
         const title = projectModel.full_name || projectModel.fullName;

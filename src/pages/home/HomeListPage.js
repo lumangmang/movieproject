@@ -14,7 +14,6 @@ import {
     StyleSheet, ActivityIndicator,
     InteractionManager,
 } from "react-native";
-
 import PlaceholderItem from "../../common/PlaceholderItem";
 import {connect} from "react-redux";
 import actions from "../../action";
