@@ -119,6 +119,5 @@ const styles = StyleSheet.create({
         marginTop: 3,
         borderRadius: 15,
         borderWidth: 0.5,
-        resizeMode: 'cover',
     },
 });
