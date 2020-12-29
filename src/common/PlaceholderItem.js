@@ -7,32 +7,49 @@
  *
  */
 
-import React, { PureComponent } from "react";
+import React from "react";
 import {
     Placeholder,
     PlaceholderLine,
     PlaceholderMedia,
-    Fade,
-    Shine,
     ShineOverlay,
 } from "rn-placeholder";
+
+import {
+    StyleSheet,
+    View
+} from 'react-native';
 
 const PlaceholderItem = () => {
     return (
         <Placeholder
-            Animation={Fade}
+            Left={props => (
+                <PlaceholderMedia style={{
+                    backgroundColor: 'lightgray',
+                    marginRight: 10,
+                }}/>
+            )}
+            Animation={ShineOverlay}
             style={{
-                marginVertical: 6,
+                marginVertical: 15,
                 marginHorizontal: 15,
                 borderRadius: 4,
             }}
         >
-            <PlaceholderLine style={{ marginTop: 15 }} width={50} />
-            <PlaceholderLine width={70} />
-            <PlaceholderLine width={80} />
+            <PlaceholderLine style={styles.line} width={50}/>
+            <PlaceholderLine style={styles.line} width={70}/>
+            <View style={{flexDirection: 'row'}}>
+                <PlaceholderLine style={[styles.line, {marginRight: 10}]} width={30}/>
+                <PlaceholderLine style={styles.line} width={50}/>
+            </View>
         </Placeholder>
     );
 };
 
 export default PlaceholderItem;
 
+const styles = StyleSheet.create({
+    line: {
+        backgroundColor: 'lightgray',
+    },
+});

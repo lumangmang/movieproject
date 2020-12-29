@@ -12,6 +12,7 @@ import AboutMePage from "../../pages/about/AboutMePage";
 import AboutPage from "../../pages/about/AboutPage";
 import WebViewPage from "../../pages/webview/WebViewPage";
 import FeedBackPage from "../../pages/profile/FeedBackPage";
+import RepoDetailPage from "../../pages/home/RepoDetailPage";
 
 // 全局子页面路由
 export default [
@@ -37,6 +38,10 @@ export default [
     },
     {
         name: "FeedBackPage", component: FeedBackPage,
+        options: { headerShown: false },
+    },
+    {
+        name: "RepoDetailPage", component: RepoDetailPage,
         options: { headerShown: false },
     },
 ];

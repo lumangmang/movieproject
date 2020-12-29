@@ -10,4 +10,5 @@
 export default {
     avatar_default: require("../resource/image/default/avatar_default.png"),
     launch_default: require("../resource/image/default/lanuch_default.jpg"),
+    placeholder: require("../resource/image/default/placeholder.jpg"),
 };

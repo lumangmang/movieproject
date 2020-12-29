@@ -13,14 +13,14 @@ import {connect} from "react-redux";
 import NavigationBar from "../../common/NavigationBar";
 import GlobalStyle from "../../resource/styles/GlobalStyle";
 import HomeListPage from "./HomeListPage";
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 import HomePageNavigator from "./HomePageNavigator";
 
 class HomePage extends PureComponent {
     constructor(props) {
         super(props);
-        this.storeNames = ["iOS", "Java", "Python", 'React',
-            "Android", "C++", "C#", 'JavaScript'
+        this.storeNames = ["iOS", "Java", "Python",
+            "Android", "C++", 'JavaScript'
         ];
     }
 

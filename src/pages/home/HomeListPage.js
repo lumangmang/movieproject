@@ -7,44 +7,66 @@
  *
  */
 
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import {
     View, RefreshControl,
     FlatList,
-    StyleSheet,
+    StyleSheet, ActivityIndicator,
+    InteractionManager,
 } from "react-native";
 
 import PlaceholderItem from "../../common/PlaceholderItem";
-
-
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import actions from "../../action";
 import HomeListItem from "./HomeListItem";
+import Navigator from "../../utils/Navigator";
 
 class HomeListPage extends PureComponent {
     constructor(props) {
         super(props);
-        const { tabLabel } = this.props;
+        const {tabLabel} = this.props;
         this.storeName = tabLabel;
     }
 
     componentDidMount() {
-        this.refreshRemoteData();
+        InteractionManager.runAfterInteractions(() => {
+            this.refreshRemoteData();
+        });
     }
 
-    refreshRemoteData() {
-        const { onRefreshPopular } = this.props;
-        onRefreshPopular(this.storeName);
+    refreshRemoteData(loadMore) {
+        const {onRefreshPopular, onLoadMorePopular} = this.props;
+        const store = this.store();
+        if (loadMore) {
+            onLoadMorePopular(this.storeName, ++store.page, 30, (message) => {
+                console.log(message);
+            }, store.projectModels);
+        } else {
+            onRefreshPopular(this.storeName, 30);
+        }
     }
 
     renderItem(data) {
         const item = data.item;
-        const { theme } = this.props;
+        const {theme} = this.props;
         return <HomeListItem item={item} theme={theme}
                              onSelect={(callBack) => {
-                                 console.log("callBack", callBack);
+                                 Navigator.goPage({
+                                     theme,
+                                     projectModel: item,
+                                     callBack,
+                                 }, 'RepoDetailPage');
                              }}
         />;
+    }
+
+    renderFooter() {
+        return this.store().hideLoadingMore ? null :
+            <View style={styles.indicatorContainer}>
+                <ActivityIndicator
+                    style={styles.indicator}
+                />
+            </View>;
     }
 
     renderList(projectModels) {
@@ -52,7 +74,7 @@ class HomeListPage extends PureComponent {
             <FlatList
                 data={projectModels}
                 renderItem={item => this.renderItem(item)}
-                keyExtractor={item => "" + item.id}
+                keyExtractor={(item, index) => "" + index}
                 refreshControl={
                     <RefreshControl
                         title={"Loading"}
@@ -60,27 +82,39 @@ class HomeListPage extends PureComponent {
                         onRefresh={() => this.refreshRemoteData()}
                     />
                 }
+                ListFooterComponent={() => this.renderFooter()}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => {
+                    setTimeout(() => {
+                        if (this.canLoadMore) {
+                            this.refreshRemoteData(true);
+                            this.canLoadMore = false;
+                        }
+                    }, 100);
+                }}
+                onMomentumScrollBegin={() => {
+                    this.canLoadMore = true;
+                }}
             />
         );
     }
 
     render() {
         let store = this.store();
-        const { theme } = this.props;
-        const { projectModels, isLoading } = store;
-
+        const {projectModels, isLoading} = store;
         return <View style={styles.container}>
             {(isLoading && !projectModels) ? renderPlaceholders() : this.renderList(projectModels)}
         </View>;
     }
 
     store() {
-        const { popular } = this.props;
+        const {popular} = this.props;
         let store = popular[this.storeName];
         if (!store) {
             store = {
                 isLoading: false,
                 projectModels: [],
+                hideLoadingMore: true,
             };
         }
         return store;
@@ -88,13 +122,15 @@ class HomeListPage extends PureComponent {
 }
 
 const renderPlaceholders = () =>
-    [...new Array(10).fill({})].map((e, i) => <PlaceholderItem key={i} />);
+    [...new Array(10).fill({})].map((e, i) => <PlaceholderItem key={i}/>);
 
 const mapStateToProps = state => ({
     popular: state.popular,
 });
 const mapDispatchToProps = dispatch => ({
-    onRefreshPopular: (storeName) => dispatch(actions.onRefreshPopular(storeName)),
+    onRefreshPopular: (storeName, per_page) => dispatch(actions.onRefreshPopular(storeName, per_page)),
+    onLoadMorePopular: (storeName, page, per_page, callBack, preItems) =>
+        dispatch(actions.onLoadMorePopular(storeName, page, per_page, callBack, preItems)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeListPage);
@@ -102,5 +138,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(HomeListPage);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    indicatorContainer: {
+        alignItems: 'center',
+    },
+    indicator: {
+        color: 'red',
+        margin: 10,
     },
 });

@@ -7,62 +7,71 @@
  *
  */
 
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import {
     View, Text,
     TouchableOpacity,
     StyleSheet,
+    Image
 } from "react-native";
 
-import { numberFormat, timeFormat } from "../../utils/String";
+import {numberFormat, timeFormat} from "../../utils/String";
 import Colors from "../../utils/Colors";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import ImageHelper from "../../utils/ImageHelper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import colors from '../../resource/json/colors';
 
 export default class HomeListItem extends PureComponent {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { item } = this.props;
+        const {item, theme} = this.props;
+        if (!item || !item.owner) return null;
         return (
             <TouchableOpacity
-                onPress={() => this.props.onSelect()}
-            >
+                onPress={() => this.props.onSelect()}>
                 <View style={styles.cell_container}>
-                    <AntDesign
-                        name={"book"}
-                        size={20}
-                        color={Colors.subtext}
-                        style={{ marginTop: 3, marginRight: 5 }}
-                    />
-                    <View style={{ flex: 1 }}>
+                    <Image style={[styles.image, {borderColor: theme.themeColor}]}
+                           defaultSource={ImageHelper.placeholder}
+                           source={{
+                               uri: item.owner.avatar_url,
+                           }}/>
+                    <View style={{flex: 1}}>
                         <Text style={styles.title}>
                             {item.full_name}
                         </Text>
-                        <Text style={styles.description}>
+                        <Text style={styles.description} numberOfLines={3}>
                             {item.description}
                         </Text>
                         <View style={styles.row}>
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                            <TouchableOpacity style={{flexDirection: "row", alignItems: "center"}}
+                                              onPress={() => {
+                                                  console.log('start');
+                                              }}>
                                 <FontAwesome
                                     name={"star-o"}
                                     size={20}
-                                    color={Colors.subtext}
-                                />
-                                <Text style={{ color: Colors.subtext, marginLeft: 2 }}>
+                                    color={Colors.subtext}/>
+                                <Text style={{color: Colors.subtext, marginLeft: 2}}>
                                     {numberFormat(item.stargazers_count)}
                                 </Text>
-                            </View>
-                            {item.language ? <Text style={styles.language}>
-                                {item.language}
-                            </Text> : null}
-                            {item.license ? <Text style={styles.language}>
-                                {item.license.spdx_id}
-                            </Text> : null
-                            }
+                            </TouchableOpacity>
+                            {item.language ?
+                                <View style={{
+                                    flexDirection: 'row',
+                                    marginLeft: 10,
+                                    alignItems: 'center',
+                                }}>
+                                    <View style={{
+                                        width: 16, height: 16,
+                                        backgroundColor: colors[item.language].color,
+                                        borderRadius: 8,
+                                        marginRight: 3,
+                                    }}/>
+                                    <Text style={{color: "#57606a"}}>
+                                        {item.language}
+                                    </Text>
+                                </View>
+                                : null}
                             <Text style={styles.language}>
                                 {timeFormat(item.pushed_at)}
                             </Text>
@@ -80,13 +89,6 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
         marginVertical: 3,
-        borderColor: "#dddddd",
-        borderWidth: 0.5,
-        borderRadius: 2,
-        shadowColor: "gray",
-        shadowOffset: { width: 0.5, height: 0.5 },
-        shadowOpacity: 0.4,
-        shadowRadius: 1,
         elevation: 2,
         flexDirection: "row",
         backgroundColor: "white",
@@ -99,13 +101,24 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         color: Colors.link,
-        marginBottom: 5,
+        marginBottom: 3,
     },
     description: {
-        marginBottom: 5,
+        marginBottom: 3,
+        lineHeight: 20,
     },
     language: {
-        marginLeft: 20,
         color: "#57606a",
+        marginLeft: 10,
+    },
+    image: {
+        width: 30,
+        height: 30,
+        marginRight: 10,
+        marginLeft: 3,
+        marginTop: 3,
+        borderRadius: 15,
+        borderWidth: 0.5,
+        resizeMode: 'cover',
     },
 });
