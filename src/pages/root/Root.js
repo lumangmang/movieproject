@@ -17,6 +17,7 @@ class Root extends PureComponent {
 
     renderCustomThemeView() {
         const {customThemeViewVisible, onShowCustomThemeView} = this.props;
+
         return (<ThemeView
             visible={customThemeViewVisible}
             {...this.props}

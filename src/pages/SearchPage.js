@@ -14,14 +14,30 @@ import {
     DeviceInfo, Modal,
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {loadStarred} from "../action/repos";
 import Macro from '../macro/Macro';
 import SafeAreaViewPlus from "../common/SafeAreaViewPlus";
 import BackPressComponent from "../common/BackPressComponent";
 import Navigator from "../utils/Navigator";
 import ViewExtension from "../utils/ViewExtension";
 import GlobalStyle from "../resource/styles/GlobalStyle";
+import PropTypes from 'prop-types';
 
-export default class SearchPage extends PureComponent {
+const loadData = ({ login, loadStarred }) => {
+    loadStarred(login)
+}
+
+class SearchPage extends PureComponent {
+
+    static propTypes = {
+        // repo: PropTypes.object,
+        // fullName: PropTypes.string.isRequired,
+        // name: PropTypes.string.isRequired,
+        // owner: PropTypes.object,
+        loadStarred: PropTypes.func.isRequired,
+        login: PropTypes.string.isRequired,
+    }
 
     constructor(props) {
         super(props);
@@ -31,6 +47,10 @@ export default class SearchPage extends PureComponent {
 
     componentDidMount() {
         this.backPress.componentDidMount();
+
+        loadData(this.props);
+        // this.props.loadStarred('lumangmang', true)
+
     }
 
     componentWillUnmount() {
@@ -38,8 +58,10 @@ export default class SearchPage extends PureComponent {
     }
 
     onBackPress() {
-        Navigator.goBack(this.props.navigation);
-        return true;
+        // Navigator.goBack(this.props.navigation);
+        // return true;
+        console.log(this.props.login);
+        this.props.loadStarred(this.props.login, true)
     }
 
     renderNavigationBar() {
@@ -66,6 +88,11 @@ export default class SearchPage extends PureComponent {
 
     render() {
         const {theme} = this.params;
+
+        const { starredRepos, starredRepoOwners, starredPagination } = this.props
+
+        // console.log('entities------', starredRepos);
+
         let statusBar = null;
         if (Platform.OS === 'ios' && !DeviceInfo.isIPhoneX_deprecated) {
             statusBar = <View style={[styles.statusBar, {backgroundColor: theme.themeColor}]}/>;
@@ -77,22 +104,36 @@ export default class SearchPage extends PureComponent {
                 {statusBar}
                 {this.renderNavigationBar()}
             </SafeAreaViewPlus>
-            // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            //     <Modal animationType={'slide'}
-            //            visible={true}
-            //            transparent={true}
-            //     >
-            //         <SafeAreaViewPlus style={GlobalStyle.root_container}
-            //                           topColor={theme.themeColor}
-            //         >
-            //             {statusBar}
-            //             {this.renderNavigationBar()}
-            //         </SafeAreaViewPlus>
-            //     </Modal>
-            // </View>
         )
     }
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+    const login = 'AlejoJamC'
+    const name = 'movieproject'
+    //
+    const {
+        pagination: { starredByUser },
+        entities: { users, repos }
+    } = state
+
+    const starredPagination = starredByUser[login] || { ids: [] }
+    const starredRepos = starredPagination.ids.map(id => repos[id])
+    const starredRepoOwners = starredRepos.map(repo => users[repo.owner])
+
+    return {
+        login,
+        starredRepos,
+        starredRepoOwners,
+        starredPagination,
+        user: users[login]
+    }
+}
+
+export default connect(mapStateToProps, {
+    loadStarred,
+})(SearchPage)
 
 const styles = StyleSheet.create({
     container: {

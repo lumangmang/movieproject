@@ -6,10 +6,12 @@
  * @flow strict-local
  */
 
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import AppNavigator from './src/navigator/AppNavigators';
 import {Provider} from 'react-redux';
-import store from './src/store';
+import configureStore from './src/store/configureStore';
+
+const store = configureStore()
 
 export default class App extends PureComponent {
 

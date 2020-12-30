@@ -18,12 +18,11 @@ import ScrollableTabView from "react-native-scrollable-tab-view";
 import HomePageNavigator from "./HomePageNavigator";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Navigator from "../../utils/Navigator";
-import SearchBar from "../../common/SearchBar";
 
 class HomePage extends PureComponent {
   constructor(props) {
     super(props);
-    this.storeNames = ["Swift", "Java", "Python",
+    this.storeNames = ["iOS", "Java", "Python",
       "Flutter", "JavaScript"];
   }
 
@@ -50,8 +49,7 @@ class HomePage extends PureComponent {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.searchBar.show();
-          // Navigator.goPage({ theme }, "SearchPage");
+          Navigator.goPage({ theme }, "SearchPage");
         }}>
         <View style={{ padding: 5, marginRight: 8 }}>
           <Ionicons
@@ -64,10 +62,6 @@ class HomePage extends PureComponent {
         </View>
       </TouchableOpacity>
     );
-  }
-
-  close() {
-    this.searchBar.hide();
   }
 
   render() {
@@ -89,16 +83,6 @@ class HomePage extends PureComponent {
       >
         {navigationBar}
         {TabNavigator}
-        <SearchBar
-          ref={(ref) => this.searchBar = ref}
-          backgroundColor={theme.themeColor}
-          iOSPadding={false}
-          // hideBack={true}
-          heightAdjust={-6}
-          onX={() => this.close()}
-          iconColor={"white"}
-          textColor={"white"}
-        />
       </View>
     );
   }
