@@ -14,7 +14,6 @@ import api from "../middleware/api";
 
 const middlewares = [
     thunk,
-    api,
 ];
 
 const configureStore = preloadedState => createStore(

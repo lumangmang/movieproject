@@ -12,6 +12,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import HomePage from "../pages/home/HomePage";
 import ProfilePage from "../pages/profile/ProfilePage";
+import EventPage from '../pages/event/EventPage';
 import { connect } from "react-redux";
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +21,21 @@ const TABS = {
     HomePage: {
         screen: HomePage,
         navigationOptions: {
-            tabBarLabel: "最热",
+            tabBarLabel: "Popular",
+            tabBarIcon: ({ color, focused }) => {
+                return <MaterialIcons
+                    name={"whatshot"}
+                    size={26}
+                    style={{ color: color }}
+                />;
+            },
+        },
+    },
+
+    EventPage: {
+        screen: EventPage,
+        navigationOptions: {
+            tabBarLabel: "Event",
             tabBarIcon: ({ color, focused }) => {
                 return <MaterialIcons
                     name={"whatshot"}
@@ -34,7 +49,7 @@ const TABS = {
     ProfilePage: {
         screen: ProfilePage,
         navigationOptions: {
-            tabBarLabel: "我的",
+            tabBarLabel: "Mine",
             tabBarIcon: ({ color, focused }) => {
                 return <Feather
                     name={"user"}
@@ -47,16 +62,9 @@ const TABS = {
 };
 
 class TabBarNavigators extends PureComponent {
-    constructor(props) {
-        super(props);
-        console.disableYellowBox = true;
-    }
     tabNavigator() {
-        // if (this.Tabs) {
-        //     return this.Tabs;
-        // }
-        const { HomePage, ProfilePage } = TABS;
-        const tabs = { HomePage, ProfilePage };
+        const { HomePage, EventPage, ProfilePage } = TABS;
+        const tabs = { HomePage, EventPage, ProfilePage };
         return this.Tabs = <NavigationContainer
             independent={true}
         >

@@ -24,7 +24,7 @@ import ViewExtension from "../utils/ViewExtension";
 import GlobalStyle from "../resource/styles/GlobalStyle";
 import PropTypes from 'prop-types';
 
-const loadData = ({ login, loadStarred }) => {
+const loadData = ({login, loadStarred}) => {
     loadStarred(login)
 }
 
@@ -88,11 +88,7 @@ class SearchPage extends PureComponent {
 
     render() {
         const {theme} = this.params;
-
-        const { starredRepos, starredRepoOwners, starredPagination } = this.props
-
-        // console.log('entities------', starredRepos);
-
+        const {starredRepos, starredRepoOwners, starredPagination} = this.props
         let statusBar = null;
         if (Platform.OS === 'ios' && !DeviceInfo.isIPhoneX_deprecated) {
             statusBar = <View style={[styles.statusBar, {backgroundColor: theme.themeColor}]}/>;
@@ -114,11 +110,11 @@ const mapStateToProps = (state, ownProps) => {
     const name = 'movieproject'
     //
     const {
-        pagination: { starredByUser },
-        entities: { users, repos }
+        pagination: {starredByUser},
+        entities: {users, repos}
     } = state
 
-    const starredPagination = starredByUser[login] || { ids: [] }
+    const starredPagination = starredByUser[login] || {ids: []}
     const starredRepos = starredPagination.ids.map(id => repos[id])
     const starredRepoOwners = starredRepos.map(repo => users[repo.owner])
 
@@ -130,6 +126,7 @@ const mapStateToProps = (state, ownProps) => {
         user: users[login]
     }
 }
+
 
 export default connect(mapStateToProps, {
     loadStarred,
