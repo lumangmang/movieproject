@@ -7,35 +7,35 @@
  *
  */
 
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import {
     View, Text,
     TouchableOpacity,
     StyleSheet,
-    Image
+    Image,
 } from "react-native";
 
-import {numberFormat, timeFormat} from "../../utils/String";
+import { numberFormat, timeFormat } from "../../utils/String";
 import Colors from "../../utils/Colors";
 import ImageHelper from "../../utils/ImageHelper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import colors from '../../resource/json/colors';
+import colors from "../../resource/json/colors";
 
 export default class HomeListItem extends PureComponent {
 
     render() {
-        const {item, theme} = this.props;
+        const { item, theme } = this.props;
         if (!item || !item.owner) return null;
         return (
             <TouchableOpacity
                 onPress={() => this.props.onSelect()}>
                 <View style={styles.cell_container}>
-                    <Image style={[styles.image, {borderColor: theme.themeColor}]}
+                    <Image style={[styles.image, { borderColor: theme.themeColor }]}
                            defaultSource={ImageHelper.placeholder}
                            source={{
                                uri: item.owner.avatar_url,
-                           }}/>
-                    <View style={{flex: 1}}>
+                           }} />
+                    <View style={{ flex: 1 }}>
                         <Text style={styles.title}>
                             {item.full_name}
                         </Text>
@@ -43,31 +43,31 @@ export default class HomeListItem extends PureComponent {
                             {item.description}
                         </Text>
                         <View style={styles.row}>
-                            <TouchableOpacity style={{flexDirection: "row", alignItems: "center"}}
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}
                                               onPress={() => {
-                                                  console.log('start');
+                                                  console.log("start");
                                               }}>
                                 <FontAwesome
                                     name={"star-o"}
                                     size={20}
-                                    color={Colors.subtext}/>
-                                <Text style={{color: Colors.subtext, marginLeft: 2}}>
+                                    color={Colors.subtext} />
+                                <Text style={{ color: Colors.subtext, marginLeft: 2 }}>
                                     {numberFormat(item.stargazers_count)}
                                 </Text>
                             </TouchableOpacity>
                             {item.language ?
                                 <View style={{
-                                    flexDirection: 'row',
+                                    flexDirection: "row",
                                     marginLeft: 10,
-                                    alignItems: 'center',
+                                    alignItems: "center",
                                 }}>
                                     <View style={{
                                         width: 16, height: 16,
                                         backgroundColor: colors[item.language].color,
                                         borderRadius: 8,
                                         marginRight: 3,
-                                    }}/>
-                                    <Text style={{color: "#57606a"}}>
+                                    }} />
+                                    <Text style={{ color: "#57606a" }}>
                                         {item.language}
                                     </Text>
                                 </View>

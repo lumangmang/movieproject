@@ -15,7 +15,6 @@ import {createLogger} from 'redux-logger';
 import api from "../middleware/api";
 
 const configureStore = preloadedState => {
-    console.log('preloadedState --- ', preloadedState);
     const store = createStore(
         reducers,
         preloadedState,

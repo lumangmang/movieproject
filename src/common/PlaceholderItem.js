@@ -17,17 +17,17 @@ import {
 
 import {
     StyleSheet,
-    View
-} from 'react-native';
+    View,
+} from "react-native";
 
 const PlaceholderItem = () => {
     return (
         <Placeholder
             Left={props => (
                 <PlaceholderMedia style={{
-                    backgroundColor: 'lightgray',
+                    backgroundColor: "lightgray",
                     marginRight: 10,
-                }}/>
+                }} />
             )}
             Animation={ShineOverlay}
             style={{
@@ -36,12 +36,10 @@ const PlaceholderItem = () => {
                 borderRadius: 4,
             }}
         >
-            <PlaceholderLine style={styles.line} width={50}/>
-            <PlaceholderLine style={styles.line} width={70}/>
-            <View style={{flexDirection: 'row'}}>
-                <PlaceholderLine style={[styles.line, {marginRight: 10}]} width={30}/>
-                <PlaceholderLine style={styles.line} width={50}/>
-            </View>
+            <PlaceholderLine style={styles.line} width={50} />
+            <PlaceholderLine style={styles.line} width={70} />
+            <PlaceholderLine style={styles.line} width={90} />
+
         </Placeholder>
     );
 };
@@ -50,6 +48,6 @@ export default PlaceholderItem;
 
 const styles = StyleSheet.create({
     line: {
-        backgroundColor: 'lightgray',
+        backgroundColor: "lightgray",
     },
 });

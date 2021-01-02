@@ -20,6 +20,8 @@ import actions from "../../action";
 import HomeListItem from "./HomeListItem";
 import Navigator from "../../utils/Navigator";
 
+const pageSize = 30;
+
 class HomeListPage extends PureComponent {
     constructor(props) {
         super(props);
@@ -37,11 +39,11 @@ class HomeListPage extends PureComponent {
         const {onRefreshPopular, onLoadMorePopular} = this.props;
         const store = this.store();
         if (loadMore) {
-            onLoadMorePopular(this.storeName, ++store.page, 30, (message) => {
+            onLoadMorePopular(this.storeName, ++store.page, pageSize, (message) => {
                 console.log(message);
             }, store.projectModels);
         } else {
-            onRefreshPopular(this.storeName, 30);
+            onRefreshPopular(this.storeName, pageSize);
         }
     }
 

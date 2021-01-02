@@ -42,7 +42,6 @@ const fetchStarred = (login, nextPageUrl) => ({
 
 export const loadStarred = (login, nextPage) => (dispatch, getState) => {
 
-    console.log('.........login',login);
     const {
         nextPageUrl = `users/${login}/starred`,
         pageCount = 0
