@@ -8,17 +8,38 @@
  */
 import axios from "axios";
 
-const service = axios.create({
-    timeout: 3000,
+const instance = axios.create({
+    timeout: 10000,
     baseURL: "https://api.github.com",
 });
 
 // 错误重试
-service.defaults.retry = 3;
-service.defaults.retryDelay = 500;
+instance.defaults.retry = 3;
+instance.defaults.retryDelay = 500;
+
+// 跨域访问需要
+instance.defaults.withCredentials = true;
+
+/**
+ * 设置请求传递数据的格式（看服务器要求的格式）
+ * x-www-form-urlencoded
+ * 默认提交表单数据
+ * 把数据对象序列化成 表单数据
+ */
+// axios.defaults.headers['Content-type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.transformRequest = data => qs.stringify(data);
+
+/**
+ * 设置默认提交
+ * 把数据对象序列化成 json 字符串
+ */
+// 设置默认提交 json
+axios.defaults.headers['Content-Type'] = 'application/json';
+// 把数据对象序列化成 json字符串
+axios.defaults.transformRequest = data => JSON.stringify(data);
 
 // 添加请求拦截器
-service.interceptors.request.use(
+instance.interceptors.request.use(
     config => {
         // do something before request is sent
         console.log("*****【 request url 】*****\n",
@@ -33,7 +54,7 @@ service.interceptors.request.use(
 );
 
 // 添加响应拦截器
-service.interceptors.response.use(
+instance.interceptors.response.use(
     response => {
         // 对响应数据做点什么
         return response.data;
@@ -55,17 +76,17 @@ service.interceptors.response.use(
             }
             config.__retryCount += 1;
             // Create new promise to handle exponential backoff
-            let backoff = new Promise(function(resolve) {
-                setTimeout(function() {
+            let backoff = new Promise(function (resolve) {
+                setTimeout(function () {
                     resolve();
                 }, config.retryDelay || 1);
             });
             // Return the promise in which recalls axios to retry the request
-            return backoff.then(function() {
-                return service(config);
+            return backoff.then(function () {
+                return instance(config);
             });
         }
     },
 );
 
-export default service;
+export default instance;

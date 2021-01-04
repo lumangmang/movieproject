@@ -7,7 +7,7 @@
  *
  */
 
-import service from "../../config/AxiosConfig";
+import instance from "../../config/AxiosConfig";
 
 class HttpServerDao {
 
@@ -18,7 +18,7 @@ class HttpServerDao {
      */
     get(url, params = {}) {
         return new Promise((resolve, reject) => {
-            service.get(url, {
+            instance.get(url, {
                 params: params,
             }).then((response) => {
                 resolve(response);
@@ -30,7 +30,7 @@ class HttpServerDao {
 
     post(url, params = {}) {
         return new Promise((resolve, reject) => {
-            service.post(url, params).then((response) => {
+            instance.post(url, params).then((response) => {
                 resolve(response);
             }).catch(error => {
                 reject(error);

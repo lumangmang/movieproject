@@ -14,6 +14,9 @@ import {
     StyleSheet,
     Image,
 } from "react-native";
+import LazyLoad from 'react-lazyload';
+
+import FastImage from 'react-native-fast-image';
 
 import { numberFormat, timeFormat } from "../../utils/String";
 import Colors from "../../utils/Colors";

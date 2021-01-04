@@ -47,8 +47,7 @@ class HomeListPage extends PureComponent {
         }
     }
 
-    renderItem(data) {
-        const item = data.item;
+    renderItem = ({item}) => {
         const {theme} = this.props;
         return <HomeListItem item={item} theme={theme}
                              onSelect={(callBack) => {
@@ -74,7 +73,7 @@ class HomeListPage extends PureComponent {
         return (
             <FlatList
                 data={projectModels}
-                renderItem={item => this.renderItem(item)}
+                renderItem={this.renderItem}
                 keyExtractor={(item, index) => "" + index}
                 refreshControl={
                     <RefreshControl
@@ -102,7 +101,7 @@ class HomeListPage extends PureComponent {
 
     render() {
         let store = this.store();
-        const {projectModels, isLoading} = store;
+        const {projectModels, isLoading, error} = store;
         return <View style={styles.container}>
             {(isLoading && !projectModels) ? renderPlaceholders() : this.renderList(projectModels)}
         </View>;

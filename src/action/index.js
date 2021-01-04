@@ -9,7 +9,7 @@ import { onThemeChange, onThemeInit, onShowCustomThemeView } from "./theme";
 
 import { fetchUserInfo, submitFeedBack } from "./users";
 import { onRefreshPopular, onLoadMorePopular } from "./popular";
-import { onSearch } from "./search";
+import { onSearch, onSearchCancel } from "./search";
 
 export default {
     onThemeInit,
@@ -20,4 +20,5 @@ export default {
     onRefreshPopular,
     onLoadMorePopular,
     onSearch,
+    onSearchCancel,
 };

@@ -22,6 +22,18 @@ export default (state = defaultSate, action) => {
                 isLoading: true,
                 showText: "取消",
             };
+        case Types.SEARCH_CANCEL:
+            return {
+                ...state,
+                isLoading: false,
+                showText: "搜索",
+            };
+        case Types.SEARCH_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                showText: "搜索",
+            };
         default:
             return state;
     }

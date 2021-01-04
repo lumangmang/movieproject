@@ -8,22 +8,21 @@
  */
 
 import Types from "../types";
-import service from "../../expand/dao/HttpServerDao";
-import URLs from "../../macro/URLs";
+import apis from "../../api/apis";
 
 export function onRefreshPopular(storeName, per_page) {
     return dispatch => {
         dispatch({
             type: Types.REFRESH_INDEX, storeName: storeName, hideLoadingMore: true,
         });
-        service.get(URLs.search_repositories_url, {
+        apis.popularIndex({
             q: storeName,
             sort: "stars",
             page: 1,
-            per_page: per_page,
+            per_page: 30,
         }).then(response => {
             handleResponse(dispatch, response,
-                Types.REFRESH_INDEX_SUCCESS, storeName, per_page, false);
+                Types.REFRESH_INDEX_SUCCESS, storeName, per_page, 1, false);
         }).catch(error => {
             console.log(error);
             dispatch({
@@ -37,15 +36,15 @@ export function onRefreshPopular(storeName, per_page) {
 
 export function onLoadMorePopular(storeName, page, per_page, callBack, preItems) {
     return dispatch => {
-        service.get(URLs.search_repositories_url, {
+        apis.popularIndex({
             q: storeName,
             sort: "stars",
             page: page,
-            per_page: per_page,
+            per_page: 30,
         }).then(response => {
             handleResponse(dispatch, response,
                 Types.LOAD_MORE_INDEX_SUCCESS, storeName,
-                per_page, true, callBack, preItems);
+                per_page, page, true, callBack, preItems);
         }).catch(error => {
             console.log(error);
             dispatch({
@@ -59,7 +58,7 @@ export function onLoadMorePopular(storeName, page, per_page, callBack, preItems)
 }
 
 function handleResponse(dispatch, data, actionType, storeName,
-                        per_page, isLoadMore, callBack, preItems) {
+                        per_page, page, isLoadMore, callBack, preItems) {
 
     let projectModels = [];
     let size = 0;
@@ -81,7 +80,7 @@ function handleResponse(dispatch, data, actionType, storeName,
         type: actionType,
         items: projectModels,
         storeName,
-        page: 1,
+        page: page,
         hideLoadingMore: hideLoadingMore,
     });
 }

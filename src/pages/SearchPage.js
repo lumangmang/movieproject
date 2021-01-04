@@ -25,6 +25,7 @@ import GlobalStyle from "../resource/styles/GlobalStyle";
 import PropTypes from "prop-types";
 import Navigator from "../utils/Navigator";
 import actions from "../action";
+import {onSearchCancel} from "../action/search";
 
 class SearchPage extends PureComponent {
 
@@ -44,7 +45,24 @@ class SearchPage extends PureComponent {
 
     onBackPress() {
         Navigator.goBack(this.props.navigation);
+        const {onSearchCancel} = this.props;
+        onSearchCancel();
+        this.refs.input.blur();
         return true;
+    }
+
+    rightNavigationAction() {
+        const {onSearchCancel, search} = this.props;
+        if (search.showText === '搜索') {
+            this.refreshRemoteData();
+        } else {
+            onSearchCancel(this.searchToken);
+        }
+    }
+
+    refreshRemoteData() {
+        const {onSearch} = this.props;
+        onSearch(this.inputKey, 30, this.searchToken = new Date().getTime());
     }
 
     renderNavigationBar() {
@@ -64,6 +82,7 @@ class SearchPage extends PureComponent {
             <TouchableOpacity
                 onPress={() => {
                     this.refs.input.blur();//收起键盘
+                    this.rightNavigationAction();
                 }}
             >
                 <View style={{ marginRight: 10 }}>
@@ -106,6 +125,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
     onSearch: (inputKey, pageSize, token) => dispatch(actions.onSearch(inputKey, pageSize, token)),
+    onSearchCancel: (token) => dispatch(actions.onSearchCancel(token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
